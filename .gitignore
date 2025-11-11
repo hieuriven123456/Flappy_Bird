@@ -1,0 +1,15 @@
+# Keil build files
+*.axf
+*.o
+*.crf
+*.lst
+*.map
+*.d
+*.hex
+*.bin
+*.bak
+
+# Folders
+Objects/
+Output/
+RTE/    # nếu chứa file generated
