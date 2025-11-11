@@ -43,11 +43,11 @@ void MX_GPIO_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-    // Clock cho GPIOB và GPIOC
+    // Clock cho GPIOB vÃ  GPIOC
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
 
-    // PB3 = nút select
+    // PB3 = nÃºt select
     GPIO_InitStruct.Pin = GPIO_PIN_3;
     GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
@@ -55,14 +55,14 @@ void MX_GPIO_Init(void)
     HAL_NVIC_SetPriority(EXTI3_IRQn, 1, 0);
     HAL_NVIC_EnableIRQ(EXTI3_IRQn);
 
-    // PC13 = nút up/down
+    // PC13 = nÃºt up/down
     GPIO_InitStruct.Pin = GPIO_PIN_13;
     GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
     HAL_NVIC_SetPriority(EXTI15_10_IRQn, 2, 0);
     HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
-		
+		//PB4 : nut home
 		GPIO_InitStruct.Pin = GPIO_PIN_4;
 		GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
 		GPIO_InitStruct.Pull = GPIO_PULLUP;
