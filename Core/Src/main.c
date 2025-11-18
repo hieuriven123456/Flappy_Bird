@@ -91,21 +91,36 @@ typedef enum {
     GAME_MENU,
     GAME_WAIT_START,
     GAME_PLAYING,
+		GAME_MENU_DIFFICULTY_SELECT,
+    GAME_MENU_GRAVITY_SELECT,
     GAME_OVER,
 		GAME_HISTORY,
+		GAME_RANK,
 		GAME_BIRD_SELECT
 } GameState;
 
+typedef enum {
+    GRAVITY_MARS = 0,
+    GRAVITY_EARTH,
+    GRAVITY_JUPITER
+} GravityLevel;
 
 typedef enum {
     DIFFICULTY_EASY = 0,
     DIFFICULTY_MEDIUM,
     DIFFICULTY_HARD
 } Difficulty;
+typedef enum {
+    MENU_DIFFICULTY = 0,
+    MENU_GRAVITY,
+    MENU_MAX
+} MenuItem;
+
+
 
 typedef struct {
-    uint8_t x, y;
-    int8_t vy;
+    float x, y;
+    float vy;
 } Bird;
 
 typedef struct {
@@ -126,21 +141,28 @@ const char* HOME_ITEMS[] = {
     "Menu",
     "History",
     "Bird Select",
+		"Ranking",
     "Exit"
+		
 };
 
 
-#define HOME_ITEM_COUNT 5
+#define HOME_ITEM_COUNT 6
 
 #define MAX_PIPES 3
 #define MAX_POOL 8
 int home_view_start = 0; 
+int menu_index = 0;  
 
 static EventMsg msg_pool[MAX_POOL];
 static uint8_t msg_head = 0, msg_tail = 0;
 
 GameState flag_gameState = GAME_HOME;
+
+//setup ban dau
 Difficulty game_difficulty = DIFFICULTY_EASY;
+GravityLevel selected_gravity = GRAVITY_EARTH;
+
 
 uint8_t menu_option = 0;
 uint8_t home_option = 0;
@@ -153,15 +175,24 @@ uint8_t num_pipes = 1;
 uint8_t score = 0;
 int last_scores[5] = {0};
 uint8_t history_count = 0;
-
+int high_scores[4] = {0, 0, 0, 0};
 int gameOver = 0;
-
+int selected_option=0;
 int cups = 0;        
     
+// khe nopipe
+int nopipe_mode = 0;
+uint32_t nopipe_start_time = 0;
+int nopipe_gap_y = 0;
+int nopipe_gap_height = 30;   // Khe rong
 
+// 5 diem thi dc 1 cup
 int next_reward_score = 5; 
 
-const int cup_unlock_thresholds[3] = {0, 0, 0};
+// do kho game
+const int cup_unlock_thresholds[] = {0, 3, 10};
+
+// ham dua su kien va lay su kien ra
 static void post_event(EventType evt) {
     msg_pool[msg_tail].type = evt;
     msg_tail = (msg_tail + 1) % MAX_POOL;
@@ -174,7 +205,7 @@ static int get_event(EventMsg *out) {
     return 1;
 }
 
-
+// ve
 void ssd1306_DrawFilledRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, SSD1306_COLOR color) {
     for (uint8_t x = x1; x <= x2; x++) {
         for (uint8_t y = y1; y <= y2; y++) {
@@ -314,6 +345,15 @@ const unsigned char epd_bitmap_flappybird []  = {
 
 
 
+void Pipes_ResetNormal() {
+    int start_x = 90;  
+    for (int i = 0; i < num_pipes; i++) {
+        pipes[i].x = start_x + i * 70;
+        pipes[i].gap_height = 20 + rand() % 12;
+        pipes[i].gap_y = 8 + rand() % (SCREEN_HEIGHT - pipes[i].gap_height - 8);
+        pipes[i].passed = 0;
+    }
+}
 
 void ssd1306_DrawBitmapTransparent( const unsigned char *bitmap, uint8_t w, uint8_t h, int16_t x0, int16_t y0, int invert)
 {
@@ -327,6 +367,133 @@ void ssd1306_DrawBitmapTransparent( const unsigned char *bitmap, uint8_t w, uint
                 ssd1306_DrawPixel(x0 + x, y0 + y, White);
             }
         }
+    }
+}
+void Game_Menu_Main_Draw()
+{
+    ssd1306_Fill(Black);
+
+    // Title
+    const char* title = "OPTIONS";
+    int title_x = (128 - strlen(title) * 7) / 2;
+    ssd1306_SetCursor(title_x, 0);
+    ssd1306_WriteString((char*)title, Font_7x10, White);
+
+    // Menu Items: Difficulty và Gravity
+    const char* menu_items[2] = {"PLAY", "Gravity"};
+    for (int i = 0; i < 2; i++)
+    {
+        int y = 20 + i*16; // v? trí t?ng m?c
+
+        // Highlight n?u dang ch?n
+        if (menu_index == i)
+        {
+            ssd1306_DrawFilledRectangle(0, y-2, 127, y+12, White); // n?n tr?ng
+            ssd1306_SetCursor(5, y);
+            ssd1306_WriteString((char*)menu_items[i], Font_7x10, Black); // ch? den
+        }
+        else
+        {
+            ssd1306_DrawRectangle(0, y-2, 127, y+12, White); // khung tr?ng
+            ssd1306_SetCursor(5, y);
+            ssd1306_WriteString((char*)menu_items[i], Font_7x10, White);
+        }
+
+        // Hi?n th? giá tr? hi?n t?i bên ph?i
+        char buf[16];
+        if (i == 0) // Difficulty
+        {
+            if (game_difficulty == DIFFICULTY_EASY) snprintf(buf, sizeof(buf), "EASY");
+            else if (game_difficulty == DIFFICULTY_MEDIUM) snprintf(buf, sizeof(buf), "MEDIUM");
+            else snprintf(buf, sizeof(buf), "HARD");
+        }
+        else if (i == 1) // Gravity
+        {
+            if (selected_gravity == GRAVITY_MARS) snprintf(buf, sizeof(buf), "MARS");
+            else if (selected_gravity == GRAVITY_EARTH) snprintf(buf, sizeof(buf), "EARTH");
+            else snprintf(buf, sizeof(buf), "JUPITER");
+        }
+
+        int right_x0 = 76;     // bat dau cot ph?i
+				int right_x1 = 127;    // ket thúc cot phai
+				int right_width = right_x1 - right_x0;
+
+				int text_w = strlen(buf) * 7;   // moi ky tu 7px (Font_7x10)
+				int cx = right_x0 + (right_width - text_w) / 2;
+
+				ssd1306_SetCursor(cx, y);
+				ssd1306_WriteString(buf, Font_7x10, (menu_index == i) ? Black : White);
+
+    }
+
+    // huong dan
+    ssd1306_SetCursor(16, 52);
+    ssd1306_WriteString("-> BTN13: Select", Font_6x8, White);
+
+    ssd1306_UpdateScreen();
+}
+
+
+void Game_DrawOptionMenu(const char* title, const char* options[], int num_options, int selected)
+{
+    ssd1306_Fill(Black);
+
+    // Title
+    int title_len = strlen(title);
+    int title_x = (128 - title_len * 7) / 2; // Font_7x10
+    ssd1306_SetCursor(title_x, 0);
+    ssd1306_WriteString((char*)title, Font_7x10, White);
+
+    // Options
+    for (int i = 0; i < num_options; i++)
+    {
+        int y = 20 + i*16;
+				
+        // Highlight option dang chon
+        if (i == selected)
+            ssd1306_DrawFilledRectangle(0, y-2, 128, y+12, White); // nen trang
+        else
+            ssd1306_DrawRectangle(0, y-2, 128, y+12, White);        // khung trang
+
+        
+        ssd1306_SetCursor(SCREEN_WIDTH/2 - 16, y);
+        if (i == selected)
+            ssd1306_WriteString((char*)options[i], Font_7x10, Black); 
+        else
+            ssd1306_WriteString((char*)options[i], Font_7x10, White);
+    }
+
+    // Huong dan
+    ssd1306_SetCursor(0, 60);
+    ssd1306_WriteString("Press BTN to select", Font_6x8, White);
+
+    ssd1306_UpdateScreen();
+}
+void drawZigZagTop(int y_end) {
+    int zig_height = 4;          // do cao rang cua
+    int zig_width  = 6;          // do rong moi rang
+
+    for (int x = 0; x < SCREEN_WIDTH; x += zig_width*2) {
+        // Khoi xuong
+        ssd1306_DrawFilledRectangle(x, 0, x + zig_width, y_end, White);
+
+        // Rang cua nho phia duoi
+        ssd1306_DrawFilledRectangle(x + zig_width, y_end - zig_height,
+                                    x + zig_width + zig_width, y_end, White);
+    }
+}
+void drawZigZagBottom(int y_start) {
+    int zig_height = 4;
+    int zig_width  = 6;
+
+    for (int x = 0; x < SCREEN_WIDTH; x += zig_width*2) {
+        // Khoi len
+        ssd1306_DrawFilledRectangle(x, y_start, x + zig_width, SCREEN_HEIGHT, White);
+
+        // Rang cua nho phia tren
+        ssd1306_DrawFilledRectangle(x + zig_width, y_start,
+                                    x + zig_width + zig_width, y_start + zig_height,
+                                    White);
     }
 }
 
@@ -360,6 +527,34 @@ void Game_Draw(void)
 				} else if (selected_bird == 2) {
 				ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird3, 13, 10, bird.x, bird.y, 0);
 			}
+			
+if (nopipe_mode) {
+
+  
+    if (selected_bird == 0)
+        ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird1, 16, 10, bird.x, bird.y, 1);
+    else if (selected_bird == 1)
+        ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird2, 12, 12, bird.x, bird.y, 0);
+    else
+        ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird3, 13, 10, bird.x, bird.y, 0);
+
+    drawZigZagTop(nopipe_gap_y);
+		drawZigZagBottom(nopipe_gap_y + nopipe_gap_height);
+
+
+  
+    char buf[12];
+    sprintf(buf, "%d", score);
+    int text_width = strlen(buf) * 7;
+    int cx = (SCREEN_WIDTH - text_width) / 2;
+    ssd1306_SetCursor(cx, 0);
+    ssd1306_WriteString(buf, Font_7x10, White);
+
+   
+    ssd1306_UpdateScreen();
+    return;
+}
+
 
 				for (int i = 0; i < num_pipes; i++) {
 						int16_t px = pipes[i].x;
@@ -402,7 +597,7 @@ void Game_Draw(void)
     ssd1306_SetCursor(25, 2);
     ssd1306_WriteString("FLAPPY BIRD", Font_7x10, White);
 
-    for (int i = 0; i < 4; i++) {  
+    for (int i = 0; i < 5; i++) {  
         int idx = home_view_start + i;
         if (idx >= HOME_ITEM_COUNT) break;
 
@@ -424,29 +619,20 @@ void Game_Draw(void)
 }
 
 		else if (flag_gameState == GAME_MENU) {
-
-    ssd1306_SetCursor(25, 5);
-    ssd1306_WriteString("SELECT LEVEL", Font_7x10, White);
-
-    const char* labels[3] = {"Easy", "Medium", "Hard"};
-    int y_start = 20;
-
-    for (int i = 0; i < 3; i++) {
-
-        int y = y_start + i * 15;
-
-        if (menu_option == i) {
-            drawArrow(10, y);  
-            ssd1306_DrawFilledRectangle(30, y - 2, 110, y + 10, White);
-            ssd1306_SetCursor(45, y);
-            ssd1306_WriteString((char*)labels[i], Font_7x10, Black);
-        } 
-        else {
-            ssd1306_SetCursor(45, y);
-            ssd1306_WriteString((char*)labels[i], Font_7x10, White);
-        }
-    }
+			Game_Menu_Main_Draw();
 }
+		else if(flag_gameState == GAME_MENU_DIFFICULTY_SELECT)
+{
+    const char* diff_options[3] = {"EASY", "MEDIUM", "HARD"};
+    Game_DrawOptionMenu("SELECT DIFFICULTY", diff_options, 3, selected_option);
+}
+else if(flag_gameState == GAME_MENU_GRAVITY_SELECT)
+{
+    const char* grav_options[3] = {"MARS", "EARTH", "JUPITER"};
+    Game_DrawOptionMenu("SELECT GRAVITY", grav_options, 3, selected_option);
+}
+
+
 
 		else if (flag_gameState == GAME_HISTORY) {
 						ssd1306_SetCursor(40, 5);
@@ -523,8 +709,25 @@ void Game_Draw(void)
 
     ssd1306_SetCursor(10, 55);
     ssd1306_WriteString("Press BTN to select", Font_6x8, White);
-}
+	}
+	else if (flag_gameState == GAME_RANK) {
+   
+    const char *title = "RANKING";
+    int title_len = strlen(title);
+    int title_x = (128 - title_len * 7) / 2;  // Font_7x10: mo?i ký tu 7px
+    ssd1306_SetCursor(title_x, 0);
+    ssd1306_WriteString((char*)title, Font_7x10, White);
 
+    
+    for (int i = 0; i < 4; i++) {
+        char buf[20];
+        sprintf(buf, "Rank %d. %d pts", i + 1, high_scores[i]);
+        int buf_len = strlen(buf);
+        int buf_x = (128 - buf_len * 6) / 2;   // Font_6x8: moi ký tu 6px
+        ssd1306_SetCursor(buf_x, 20 + i * 12);
+        ssd1306_WriteString(buf, Font_6x8, White);
+    }
+}
 
     ssd1306_UpdateScreen();
 		
@@ -532,17 +735,22 @@ void Game_Draw(void)
 
 
 void Game_Init(void) {
- 
+		  if (game_difficulty == DIFFICULTY_EASY) 
+        num_pipes = 2;
+    else if (game_difficulty == DIFFICULTY_MEDIUM)
+        num_pipes = 2;
+    else
+        num_pipes = 3;
 	  next_reward_score = 5;
 		bird.x = 20;
     bird.y = SCREEN_HEIGHT / 2;
     bird.vy = 0;
-    int gap_between = 48;
+    int gap_between = 45;
 
     for (int i = 0; i < num_pipes; i++) {
         pipes[i].x = SCREEN_WIDTH + i * gap_between;
-        pipes[i].gap_y = 10 + rand() % (SCREEN_HEIGHT - 35);
-        pipes[i].gap_height = 23 + rand() % 12;
+        pipes[i].gap_y = 10 + rand() % (SCREEN_HEIGHT - 32);
+        pipes[i].gap_height = 25 + rand() % 12;
         pipes[i].passed = 0;
     }
 
@@ -570,58 +778,108 @@ void SaveScoreToHistory(void) {
     }
 }
 
-
+void UpdateRanking(int newScore) {
+    for (int i = 0; i < 4; i++) {
+        if (newScore > high_scores[i]) {
+            for (int j = 3; j > i; j--) {
+                high_scores[j] = high_scores[j - 1];
+            }
+            high_scores[i] = newScore;
+            break;
+        }
+    }
+}
 void Game_Update(void) {
     if (gameOver) return;
+		if (nopipe_mode) {
+    // kiem tra het 5 giây
+				if (HAL_GetTick() - nopipe_start_time >= 3000) {
+        nopipe_mode = 0;
+        Pipes_ResetNormal(); // ch? reset ?ng
+        return;
+				}
 
-    int pipe_speed = (game_difficulty == DIFFICULTY_HARD) ? 4 :
-                     (game_difficulty == DIFFICULTY_MEDIUM) ? 3 : 2;
+    // cap nhat bird
+				int gravity_force = (selected_gravity == GRAVITY_JUPITER) ? 3 :(selected_gravity == GRAVITY_MARS)  ? 1 : 2;
+				bird.vy += gravity_force;
+				bird.y += bird.vy;
 
-    bird.vy += 2;
+    // kiem tra va cham voi khe
+				if (bird.y <= nopipe_gap_y || bird.y >= nopipe_gap_y + nopipe_gap_height) {
+        gameOver = 1;
+        SaveScoreToHistory();
+        UpdateRanking(score);
+        flag_gameState = GAME_OVER;
+        return;
+			}
+		return; // ?? Khong chay logic pipe nua
+		}
+    int pipe_speed = (game_difficulty == DIFFICULTY_HARD) ? 4 :(game_difficulty == DIFFICULTY_MEDIUM) ? 3 : 2;
+
+    float gravity_force = (selected_gravity == GRAVITY_JUPITER) ? 3.0f :(selected_gravity == GRAVITY_MARS)  ? 1.5f : 2.0f;
+			
+    bird.vy += gravity_force;
     bird.y += bird.vy;
-
     for (int i = 0; i < num_pipes; i++) {
         pipes[i].x -= pipe_speed;
 
-        if (!pipes[i].passed && pipes[i].x + 12 < bird.x && pipes[i].x > -20) {
-            pipes[i].passed = 1;
-            score++;
-							if (score >= next_reward_score) {
-								cups++;                   
-								next_reward_score += 5;  
-			}
-        }
-
-        if (pipes[i].x < -20) {
-            int16_t max_x = pipes[0].x;
-            for (int j = 1; j < num_pipes; j++)
-                if (pipes[j].x > max_x) max_x = pipes[j].x;
-
-            pipes[i].x = max_x + 60;
-            pipes[i].gap_height = 20 + rand() % 12;   // random l?i gap_height m?i
-						pipes[i].gap_y = 8 + rand() % (SCREEN_HEIGHT - pipes[i].gap_height - 8);
-
-            pipes[i].passed = 0;
-					}
-				}
-				if (bird.y <= 0 || bird.y >= SCREEN_HEIGHT - 3) {
-					gameOver = 1;
-					SaveScoreToHistory();
-					flag_gameState = GAME_OVER;
-				return;
-				}
-		for (int i = 0; i < num_pipes; i++) {
-			int16_t px = pipes[i].x;
-			if (bird.x + 3 >= px && bird.x <= px + 12) {
-        if (bird.y <= pipes[i].gap_y || bird.y >= pipes[i].gap_y + pipes[i].gap_height) {
-            gameOver = 1;
-            SaveScoreToHistory(); 
-            flag_gameState = GAME_OVER;
-            return;
-        }
+    // kiem tra vuot ong de tang diem
+    if (!pipes[i].passed && pipes[i].x + 12 < bird.x && pipes[i].x > -20) {
+         pipes[i].passed = 1;
+         score++;
+            if (score >= next_reward_score) {
+                cups++;
+                next_reward_score += 5;
+            }
+						if (score > 0 && score % 10 == 0 && !nopipe_mode) {
+        nopipe_mode = 1;
+        nopipe_start_time = HAL_GetTick();
+        nopipe_gap_y = 10 + rand() % (SCREEN_HEIGHT - nopipe_gap_height - 10);
     }
-	}
+        }
+    // reset ong khi di het man hinh
+		if (pipes[i].x < -20) {
+		int16_t max_x = pipes[0].x;
+    for (int j = 1; j < num_pipes; j++)
+					if (pipes[j].x > max_x) max_x = pipes[j].x;
+					int gap_between = 70;
+					pipes[i].x = max_x + gap_between;
+			
+				int base_gap =
+						(game_difficulty == DIFFICULTY_EASY) ? 28 : (game_difficulty == DIFFICULTY_MEDIUM) ? 26 :24; // HARD
+				int random_range = (game_difficulty == DIFFICULTY_EASY)? 8 :(game_difficulty == DIFFICULTY_MEDIUM) ? 7 : 6;
+				pipes[i].gap_height = base_gap + rand() % random_range;
+
+	
+    // Gioi han khong cho qua be
+				if (pipes[i].gap_height < 12) pipes[i].gap_height = 12;
+
+    // Random vi tri Y
+				pipes[i].gap_y = 8 + rand() % (SCREEN_HEIGHT - pipes[i].gap_height - 8);
+				pipes[i].passed = 0;
+		}
+	// kiem tra va cham voi ong
+				if (bird.x + 3 >= pipes[i].x && bird.x <= pipes[i].x + 12) {
+					if (bird.y <= pipes[i].gap_y || bird.y >= pipes[i].gap_y + pipes[i].gap_height) {
+                gameOver = 1;
+                SaveScoreToHistory();
+                UpdateRanking(score);
+                flag_gameState = GAME_OVER;
+                return;
+            }
+        }
+   }
+
+    // kiem tra roi thoat ra ngoai man 
+    if (bird.y <= 0 || bird.y >= SCREEN_HEIGHT - 3) {
+        gameOver = 1;
+        SaveScoreToHistory();
+        UpdateRanking(score);
+        flag_gameState = GAME_OVER;
+        return;
+    }
 }
+
 
 void Bird_Jump(void) {
     if (!gameOver) {
@@ -636,58 +894,112 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     static uint32_t last_press = 0;
     if (HAL_GetTick() - last_press < 150) return;
     last_press = HAL_GetTick();
-		
-    if (GPIO_Pin == GPIO_PIN_3) {
-        post_event(EVT_BTN_PRESS); 
-    } 
-    else if (GPIO_Pin == GPIO_PIN_13) {
-				if (flag_gameState == GAME_HOME) {
-						if (home_option == 0) flag_gameState = GAME_WAIT_START;
-						else if (home_option == 1) flag_gameState = GAME_MENU;
-						else if (home_option == 2) flag_gameState = GAME_HISTORY;
-						else if (home_option == 3) flag_gameState = GAME_BIRD_SELECT;
-						else if (home_option == 4) flag_gameState = GAME_PLATFORM; // EXIT
-				}
-				post_event(EVT_DRAW_FRAME);
-    }
-    else if (flag_gameState == GAME_MENU) {
-      
-        if (menu_option == 0) {
-            game_difficulty = DIFFICULTY_EASY;
-            num_pipes = 2;
-        } else if (menu_option == 1) {
-            game_difficulty = DIFFICULTY_MEDIUM;
-            num_pipes = 2;
-        } else if (menu_option == 2) {
-            game_difficulty = DIFFICULTY_HARD;
-            num_pipes = 3;
-        }
-        Game_Init();
-        flag_gameState = GAME_HOME;
-        post_event(EVT_DRAW_FRAME);
-    }
-		else if (flag_gameState == GAME_BIRD_SELECT) {
+
     
-    for (int k = 0; k < 3; k++) {
-        uint8_t next = (selected_bird ) % 3;
-        int unlocked = 0;
-        if (next == 0) unlocked = 1;
-        else if (next == 1 && cups >= cup_unlock_thresholds[1]) unlocked = 1;
-        else if (next == 2 && cups >= cup_unlock_thresholds[2]) unlocked = 1;
+    if (GPIO_Pin == GPIO_PIN_3)
+    {
+        if (flag_gameState == GAME_BIRD_SELECT)
+        {
+            selected_bird = (selected_bird + 1) % 3;
+            post_event(EVT_DRAW_FRAME);
+            return;
+        }
 
-        selected_bird = next;
-			flag_gameState = GAME_HOME;
-        if (unlocked) break;
-        
+        if (flag_gameState == GAME_MENU)
+        {
+            menu_index = (menu_index + 1) % MENU_MAX;
+            post_event(EVT_DRAW_FRAME);
+            return;
+        }
+
+        if (flag_gameState == GAME_MENU_DIFFICULTY_SELECT)
+        {
+            selected_option = (selected_option + 1) % 3;  // EASY/MED/HARD
+            post_event(EVT_DRAW_FRAME);
+            return;
+        }
+
+        if (flag_gameState == GAME_MENU_GRAVITY_SELECT)
+        {
+            selected_option = (selected_option + 1) % 3;  // LOW/NORMAL/HIGH
+            post_event(EVT_DRAW_FRAME);
+            return;
+        }
+
+        /* Gameplay button */
+        post_event(EVT_BTN_PRESS);
+        return;
     }
-    post_event(EVT_DRAW_FRAME);
-		}
 
-		else if (GPIO_Pin == GPIO_PIN_4) {
+    else if (GPIO_Pin == GPIO_PIN_13)
+    {
+        if (flag_gameState == GAME_HOME)
+        {
+            if (home_option == 0) flag_gameState = GAME_WAIT_START;
+            else if (home_option == 1) flag_gameState = GAME_MENU;
+            else if (home_option == 2) flag_gameState = GAME_HISTORY;
+            else if (home_option == 3) flag_gameState = GAME_BIRD_SELECT;
+            else if (home_option == 4) flag_gameState = GAME_RANK;
+            else if (home_option == 5) flag_gameState = GAME_PLATFORM;
+
+            post_event(EVT_DRAW_FRAME);
+            return;
+        }
+
         
+        if (flag_gameState == GAME_BIRD_SELECT)
+        {
+            int unlocked = 0;
+            if (selected_bird == 0) unlocked = 1;
+            else if (selected_bird == 1 && cups >= cup_unlock_thresholds[1]) unlocked = 1;
+            else if (selected_bird == 2 && cups >= cup_unlock_thresholds[2]) unlocked = 1;
+
+            if (!unlocked) selected_bird = 0;
+
+            flag_gameState = GAME_HOME;
+            post_event(EVT_DRAW_FRAME);
+            return;
+        }
+
+        if (flag_gameState == GAME_MENU)
+        {
+            if (menu_index == MENU_DIFFICULTY)
+            {
+                flag_gameState = GAME_MENU_DIFFICULTY_SELECT;
+                selected_option = game_difficulty;   // 0..2
+            }
+            else if (menu_index == MENU_GRAVITY)
+            {
+                flag_gameState = GAME_MENU_GRAVITY_SELECT;
+                selected_option = selected_gravity;  // 0..2
+            }
+
+            post_event(EVT_DRAW_FRAME);
+            return;
+        }
+
+       if (flag_gameState == GAME_MENU_DIFFICULTY_SELECT)
+        {
+            game_difficulty = selected_option;
+            flag_gameState = GAME_MENU;
+            post_event(EVT_DRAW_FRAME);
+            return;
+        }
+        if (flag_gameState == GAME_MENU_GRAVITY_SELECT)
+        {
+            selected_gravity = selected_option;
+            flag_gameState = GAME_MENU;
+            post_event(EVT_DRAW_FRAME);
+            return;
+        }
+    }
+
+    else if (GPIO_Pin == GPIO_PIN_4)
+    {
         flag_gameState = GAME_HOME;
-        Game_Init();                 
-        post_event(EVT_DRAW_FRAME);  
+        Game_Init();
+        post_event(EVT_DRAW_FRAME);
+        return;
     }
 }
 
@@ -719,7 +1031,7 @@ int main(void)
 										}
 										else if (flag_gameState == GAME_HOME) {
 
-										home_option = (home_option + 1) % HOME_ITEM_COUNT;   // 5 m?c
+										home_option = (home_option + 1) % HOME_ITEM_COUNT;   
 
     
 										if (home_option >= home_view_start + 3) {
@@ -762,10 +1074,7 @@ int main(void)
 											flag_gameState = GAME_HOME;
 											post_event(EVT_DRAW_FRAME);
 										}
-										else if (flag_gameState == GAME_BIRD_SELECT) {
-											selected_bird = (selected_bird + 1) % 3; 
-											post_event(EVT_DRAW_FRAME);
-										}
+										
 																			
 							break;
 

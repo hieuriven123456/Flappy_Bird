@@ -1,7 +1,7 @@
 #include "soft_i2c.h"
 
 static void I2C_Delay(void) {
-    for (volatile int i = 0; i < 8; i++); // 
+    for (volatile int i = 0; i < 3; i++); // 
 }
 
 static void SDA_High(void) {
