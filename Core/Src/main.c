@@ -190,7 +190,7 @@ int nopipe_gap_height = 30;   // Khe rong
 int next_reward_score = 5; 
 
 // do kho game
-const int cup_unlock_thresholds[] = {0, 3, 10};
+const int cup_unlock_thresholds[] = {0, 0, 0};
 
 // ham dua su kien va lay su kien ra
 static void post_event(EventType evt) {
@@ -800,7 +800,7 @@ void Game_Update(void) {
 				}
 
     // cap nhat bird
-				int gravity_force = (selected_gravity == GRAVITY_JUPITER) ? 3 :(selected_gravity == GRAVITY_MARS)  ? 1 : 2;
+				float gravity_force = (selected_gravity == GRAVITY_JUPITER) ? 3.0f :(selected_gravity == GRAVITY_MARS)  ? 1.5f : 2.0f;
 				bird.vy += gravity_force;
 				bird.y += bird.vy;
 
@@ -812,12 +812,15 @@ void Game_Update(void) {
         flag_gameState = GAME_OVER;
         return;
 			}
+		//
+
 		return; // ?? Khong chay logic pipe nua
 		}
     int pipe_speed = (game_difficulty == DIFFICULTY_HARD) ? 4 :(game_difficulty == DIFFICULTY_MEDIUM) ? 3 : 2;
 
     float gravity_force = (selected_gravity == GRAVITY_JUPITER) ? 3.0f :(selected_gravity == GRAVITY_MARS)  ? 1.5f : 2.0f;
-			
+		int bird_width = (selected_bird == 0) ? 16 :(selected_bird == 1) ? 12 : 13;
+		int bird_height = (selected_bird == 0) ? 10 :(selected_bird == 1) ? 12 : 10;
     bird.vy += gravity_force;
     bird.y += bird.vy;
     for (int i = 0; i < num_pipes; i++) {
@@ -859,8 +862,8 @@ void Game_Update(void) {
 				pipes[i].passed = 0;
 		}
 	// kiem tra va cham voi ong
-				if (bird.x + 3 >= pipes[i].x && bird.x <= pipes[i].x + 12) {
-					if (bird.y <= pipes[i].gap_y || bird.y >= pipes[i].gap_y + pipes[i].gap_height) {
+				if (bird.x + bird_width >= pipes[i].x && bird.x <= pipes[i].x + 12) {
+					if (bird.y <= pipes[i].gap_y || bird.y + bird_height -5 >= pipes[i].gap_y + pipes[i].gap_height) {
                 gameOver = 1;
                 SaveScoreToHistory();
                 UpdateRanking(score);
