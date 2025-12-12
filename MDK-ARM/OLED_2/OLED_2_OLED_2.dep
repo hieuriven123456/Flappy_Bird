@@ -1,8 +1,13 @@
 Dependencies for Project 'OLED_2', Target 'OLED_2': (DO NOT MODIFY !)
 CompilerVersion: 5060750::V5.06 update 6 (build 750)::ARMCC
 F (startup_stm32l151xb.s)(0x68CBE08A)(--cpu Cortex-M3 -g --apcs=interwork -I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include--pd "__UVISION_VERSION SETA 529" --pd "_RTE_ SETA 1" --pd "STM32L151xB SETA 1"--list startup_stm32l151xb.lst --xref -o oled_2\startup_stm32l151xb.o --depend oled_2\startup_stm32l151xb.d)
-F (../Core/Src/main.c)(0x691BDBB7)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\main.o --omf_browse oled_2\main.crf --depend oled_2\main.d)
-I (../Core/Inc/main.h)(0x68C8D355)
+F (..\Core\Inc\draw_game.h)(0x693B9A1C)()
+F (..\Core\Inc\config.h)(0x693B977B)()
+F (..\Core\Inc\game.h)(0x693B99D0)()
+F (..\Core\Inc\ring_buffer.h)(0x693B977B)()
+F (..\Core\Inc\button_handle.h)(0x693B977B)()
+F (../Core/Src/main.c)(0x693B9BDB)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\main.o --omf_browse oled_2\main.crf --depend oled_2\main.d)
+I (../Core/Inc/main.h)(0x693B0349)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h)(0x68C77EE3)
 I (../Core/Inc/stm32l1xx_hal_conf.h)(0x68C8D355)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_rcc.h)(0x68C77EE3)
@@ -34,12 +39,20 @@ I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h)(0x68C77EE3)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_exti.h)(0x68C77EE3)
 I (../Drivers/OLED/soft_i2c.h)(0x68CB8536)
 I (../Core/Inc/gpio.h)(0x68DF97AC)
-I (../Drivers/OLED/ssd1306.h)(0x690B1866)
+I (../Drivers/OLED/ssd1306.h)(0x693B9CC2)
 I (../Drivers/OLED/ssd1306_conf_template.h)(0x68CB8536)
 I (../Drivers/OLED/ssd1306_fonts.h)(0x68CB8536)
-F (../Core/Src/gpio.c)(0x69008101)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\gpio.o --omf_browse oled_2\gpio.crf --depend oled_2\gpio.d)
+I (../Core/Inc/draw_game.h)(0x693B9A1C)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9AE02A)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9AE028)
+I (../Core/Inc/config.h)(0x693B977B)
+I (../Core/Inc/game.h)(0x693B99D0)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9AE02A)
+I (../Core/Inc/ring_buffer.h)(0x693B977B)
+I (../Core/Inc/button_handle.h)(0x693B977B)
+F (../Core/Src/gpio.c)(0x69316058)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\gpio.o --omf_browse oled_2\gpio.crf --depend oled_2\gpio.d)
 I (../Core/Inc/gpio.h)(0x68DF97AC)
-I (../Core/Inc/main.h)(0x68C8D355)
+I (../Core/Inc/main.h)(0x693B0349)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h)(0x68C77EE3)
 I (../Core/Inc/stm32l1xx_hal_conf.h)(0x68C8D355)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_rcc.h)(0x68C77EE3)
@@ -71,7 +84,7 @@ I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h)(0x68C77EE3)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_exti.h)(0x68C77EE3)
 F (../Core/Src/i2c.c)(0x68CBE087)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\i2c.o --omf_browse oled_2\i2c.crf --depend oled_2\i2c.d)
 I (../Core/Inc/i2c.h)(0x68C8D354)
-I (../Core/Inc/main.h)(0x68C8D355)
+I (../Core/Inc/main.h)(0x693B0349)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h)(0x68C77EE3)
 I (../Core/Inc/stm32l1xx_hal_conf.h)(0x68C8D355)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_rcc.h)(0x68C77EE3)
@@ -102,7 +115,7 @@ I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim.h)(0x68C77EE3)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h)(0x68C77EE3)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_exti.h)(0x68C77EE3)
 F (../Core/Src/stm32l1xx_it.c)(0x69007E0A)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\stm32l1xx_it.o --omf_browse oled_2\stm32l1xx_it.crf --depend oled_2\stm32l1xx_it.d)
-I (../Core/Inc/main.h)(0x68C8D355)
+I (../Core/Inc/main.h)(0x693B0349)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h)(0x68C77EE3)
 I (../Core/Inc/stm32l1xx_hal_conf.h)(0x68C8D355)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_rcc.h)(0x68C77EE3)
@@ -134,7 +147,7 @@ I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h)(0x68C77EE3)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_exti.h)(0x68C77EE3)
 I (../Core/Inc/stm32l1xx_it.h)(0x68C8D355)
 F (../Core/Src/stm32l1xx_hal_msp.c)(0x68C8D355)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\stm32l1xx_hal_msp.o --omf_browse oled_2\stm32l1xx_hal_msp.crf --depend oled_2\stm32l1xx_hal_msp.d)
-I (../Core/Inc/main.h)(0x68C8D355)
+I (../Core/Inc/main.h)(0x693B0349)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h)(0x68C77EE3)
 I (../Core/Inc/stm32l1xx_hal_conf.h)(0x68C8D355)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_rcc.h)(0x68C77EE3)
@@ -194,6 +207,125 @@ I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_pwr_ex.h)(0x68C77EE3)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim.h)(0x68C77EE3)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h)(0x68C77EE3)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_exti.h)(0x68C77EE3)
+F (..\Core\Src\draw_game.c)(0x693AF65D)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\draw_game.o --omf_browse oled_2\draw_game.crf --depend oled_2\draw_game.d)
+I (../Core/Inc/draw_game.h)(0x693B9A1C)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9AE02A)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9AE028)
+I (../Drivers/OLED/ssd1306.h)(0x693B9CC2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5D9AE028)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AE028)
+I (../Drivers/OLED/ssd1306_conf_template.h)(0x68CB8536)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h)(0x68C77EE3)
+I (../Core/Inc/stm32l1xx_hal_conf.h)(0x68C8D355)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_rcc.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_def.h)(0x68C77EE3)
+I (../Drivers/CMSIS/Device/ST/STM32L1xx/Include/stm32l1xx.h)(0x68C77EE3)
+I (../Drivers/CMSIS/Device/ST/STM32L1xx/Include/stm32l151xb.h)(0x68C77EE3)
+I (../Drivers/CMSIS/Include/core_cm3.h)(0x68C77EDD)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x68C77EDD)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x68C77EDD)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x68C77EDD)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x68C77EDD)
+I (../Drivers/CMSIS/Device/ST/STM32L1xx/Include/system_stm32l1xx.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_rcc_ex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_gpio.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_gpio_ex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_dma.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_cortex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_flash.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_flash_ex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_flash_ramfunc.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_i2c.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_pwr.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_pwr_ex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_exti.h)(0x68C77EE3)
+I (../Drivers/OLED/ssd1306_fonts.h)(0x68CB8536)
+I (../Drivers/OLED/soft_i2c.h)(0x68CB8536)
+I (../Core/Inc/config.h)(0x693B977B)
+F (..\Core\Src\game.c)(0x693B9D1C)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\game.o --omf_browse oled_2\game.crf --depend oled_2\game.d)
+I (../Core/Inc/game.h)(0x693B99D0)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AE028)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9AE028)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9AE02A)
+I (../Core/Inc/config.h)(0x693B977B)
+I (../Core/Inc/draw_game.h)(0x693B9A1C)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9AE02A)
+I (../Drivers/OLED/ssd1306.h)(0x693B9CC2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5D9AE028)
+I (../Drivers/OLED/ssd1306_conf_template.h)(0x68CB8536)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h)(0x68C77EE3)
+I (../Core/Inc/stm32l1xx_hal_conf.h)(0x68C8D355)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_rcc.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_def.h)(0x68C77EE3)
+I (../Drivers/CMSIS/Device/ST/STM32L1xx/Include/stm32l1xx.h)(0x68C77EE3)
+I (../Drivers/CMSIS/Device/ST/STM32L1xx/Include/stm32l151xb.h)(0x68C77EE3)
+I (../Drivers/CMSIS/Include/core_cm3.h)(0x68C77EDD)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x68C77EDD)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x68C77EDD)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x68C77EDD)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x68C77EDD)
+I (../Drivers/CMSIS/Device/ST/STM32L1xx/Include/system_stm32l1xx.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_rcc_ex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_gpio.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_gpio_ex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_dma.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_cortex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_flash.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_flash_ex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_flash_ramfunc.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_i2c.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_pwr.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_pwr_ex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_exti.h)(0x68C77EE3)
+I (../Drivers/OLED/ssd1306_fonts.h)(0x68CB8536)
+I (../Drivers/OLED/soft_i2c.h)(0x68CB8536)
+F (..\Core\Src\ring_buffer.c)(0x693B9070)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\ring_buffer.o --omf_browse oled_2\ring_buffer.crf --depend oled_2\ring_buffer.d)
+I (../Core/Inc/ring_buffer.h)(0x693B977B)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AE028)
+F (..\Core\Src\button_handle.c)(0x693B977B)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\button_handle.o --omf_browse oled_2\button_handle.crf --depend oled_2\button_handle.d)
+I (../Core/Inc/button_handle.h)(0x693B977B)
+I (../Core/Inc/config.h)(0x693B977B)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AE028)
+I (../Core/Inc/ring_buffer.h)(0x693B977B)
+I (../Core/Inc/gpio.h)(0x68DF97AC)
+I (../Core/Inc/main.h)(0x693B0349)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h)(0x68C77EE3)
+I (../Core/Inc/stm32l1xx_hal_conf.h)(0x68C8D355)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_rcc.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_def.h)(0x68C77EE3)
+I (../Drivers/CMSIS/Device/ST/STM32L1xx/Include/stm32l1xx.h)(0x68C77EE3)
+I (../Drivers/CMSIS/Device/ST/STM32L1xx/Include/stm32l151xb.h)(0x68C77EE3)
+I (../Drivers/CMSIS/Include/core_cm3.h)(0x68C77EDD)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x68C77EDD)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x68C77EDD)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x68C77EDD)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x68C77EDD)
+I (../Drivers/CMSIS/Device/ST/STM32L1xx/Include/system_stm32l1xx.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x68C77EE3)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5D9AE028)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_rcc_ex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_gpio.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_gpio_ex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_dma.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_cortex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_flash.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_flash_ex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_flash_ramfunc.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_i2c.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_pwr.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_pwr_ex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h)(0x68C77EE3)
+I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_exti.h)(0x68C77EE3)
+I (../Core/Inc/game.h)(0x693B99D0)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9AE028)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9AE02A)
 F (../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.c)(0x68C77EE3)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\stm32l1xx_hal_tim.o --omf_browse oled_2\stm32l1xx_hal_tim.crf --depend oled_2\stm32l1xx_hal_tim.d)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h)(0x68C77EE3)
 I (../Core/Inc/stm32l1xx_hal_conf.h)(0x68C8D355)
@@ -644,7 +776,7 @@ I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_pwr_ex.h)(0x68C77EE3)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim.h)(0x68C77EE3)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h)(0x68C77EE3)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_exti.h)(0x68C77EE3)
-F (..\Drivers\OLED\soft_i2c.c)(0x6919ACF6)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\soft_i2c.o --omf_browse oled_2\soft_i2c.crf --depend oled_2\soft_i2c.d)
+F (..\Drivers\OLED\soft_i2c.c)(0x691C3AE6)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\soft_i2c.o --omf_browse oled_2\soft_i2c.crf --depend oled_2\soft_i2c.d)
 I (..\Drivers\OLED\soft_i2c.h)(0x68CB8536)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h)(0x68C77EE3)
 I (../Core/Inc/stm32l1xx_hal_conf.h)(0x68C8D355)
@@ -677,7 +809,7 @@ I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h)(0x68C77EE3)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_exti.h)(0x68C77EE3)
 F (..\Drivers\OLED\soft_i2c.h)(0x68CB8536)()
 F (..\Drivers\OLED\ssd1306.c)(0x690B1866)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\ssd1306.o --omf_browse oled_2\ssd1306.crf --depend oled_2\ssd1306.d)
-I (..\Drivers\OLED\ssd1306.h)(0x690B1866)
+I (..\Drivers\OLED\ssd1306.h)(0x693B9CC2)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5D9AE028)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AE028)
 I (..\Drivers\OLED\ssd1306_conf_template.h)(0x68CB8536)
@@ -712,11 +844,11 @@ I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x5D9AE022)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9AE02A)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9AE028)
 I (..\Drivers\OLED\soft_i2c.h)(0x68CB8536)
-F (..\Drivers\OLED\ssd1306.h)(0x690B1866)()
+F (..\Drivers\OLED\ssd1306.h)(0x693B9CC2)()
 F (..\Drivers\OLED\ssd1306_conf_template.h)(0x68CB8536)()
 F (..\Drivers\OLED\ssd1306_fonts.c)(0x68CB8536)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\ssd1306_fonts.o --omf_browse oled_2\ssd1306_fonts.crf --depend oled_2\ssd1306_fonts.d)
 I (..\Drivers\OLED\ssd1306_fonts.h)(0x68CB8536)
-I (..\Drivers\OLED\ssd1306.h)(0x690B1866)
+I (..\Drivers\OLED\ssd1306.h)(0x693B9CC2)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5D9AE028)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AE028)
 I (..\Drivers\OLED\ssd1306_conf_template.h)(0x68CB8536)
@@ -751,7 +883,7 @@ F (..\Drivers\OLED\ssd1306_fonts.h)(0x68CB8536)()
 F (..\Drivers\OLED\ssd1306_tests.c)(0x68CB8536)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ../Drivers/CMSIS/Include -I ../Drivers/OLED -I ..\Drivers\OLED -I "C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include"-I.\RTE\_OLED_2-IC:\Users\Lenovo\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L151xB -DUSE_HAL_DRIVER -DSTM32L151xB-o oled_2\ssd1306_tests.o --omf_browse oled_2\ssd1306_tests.crf --depend oled_2\ssd1306_tests.d)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9AE028)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9AE02A)
-I (..\Drivers\OLED\ssd1306.h)(0x690B1866)
+I (..\Drivers\OLED\ssd1306.h)(0x693B9CC2)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5D9AE028)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AE028)
 I (..\Drivers\OLED\ssd1306_conf_template.h)(0x68CB8536)

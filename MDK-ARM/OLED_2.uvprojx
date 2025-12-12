@@ -387,6 +387,31 @@
               <FileType>2</FileType>
               <FilePath>startup_stm32l151xb.s</FilePath>
             </File>
+            <File>
+              <FileName>draw_game.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\draw_game.h</FilePath>
+            </File>
+            <File>
+              <FileName>config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\config.h</FilePath>
+            </File>
+            <File>
+              <FileName>game.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\game.h</FilePath>
+            </File>
+            <File>
+              <FileName>ring_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\ring_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>button_handle.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\button_handle.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -421,6 +446,26 @@
               <FileName>stm32l1xx_hal_timebase_tim.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32l1xx_hal_timebase_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>draw_game.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\draw_game.c</FilePath>
+            </File>
+            <File>
+              <FileName>game.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\game.c</FilePath>
+            </File>
+            <File>
+              <FileName>ring_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\ring_buffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>button_handle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\button_handle.c</FilePath>
             </File>
           </Files>
         </Group>
