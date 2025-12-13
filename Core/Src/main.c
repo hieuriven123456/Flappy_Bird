@@ -27,6 +27,7 @@
 #include "game.h"
 #include "ring_buffer.h"
 #include "button_handle.h"
+#include "signal_handle.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -74,20 +75,15 @@ void SystemClock_Config(void);
 
 extern GameState flag_gameState;
 EventRingBuffer gEventRB;
+extern uint16_t last_button_pin;
 
 
-
-void Speaker_Beep(uint16_t ms)
-{
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
-    HAL_Delay(ms);
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
-}
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
     Button_Handle(GPIO_Pin);
 }
+
 int main(void)
 {
     HAL_Init();
@@ -100,91 +96,62 @@ int main(void)
     flag_gameState = GAME_PLATFORM;
 		EventRB_Init(&gEventRB);
     EventRB_Post(&gEventRB, EVT_DRAW_FRAME);
-
     uint32_t lastTick = HAL_GetTick();
 
     while (1) {
+				
+				 Signal_Update();
         if (HAL_GetTick() - lastTick >= 30) {
             EventRB_Post(&gEventRB, EVT_TIMER_TICK);
             lastTick = HAL_GetTick();
         }
+
         EventMsg e;
-        while (EventRB_Get(&gEventRB, &e)) {
-            switch (e.type) {
-               case EVT_BTN_PRESS:
-										if (flag_gameState == GAME_PLATFORM) {
-											EventRB_Post(&gEventRB, EVT_DRAW_FRAME);
-										}
-										else if (flag_gameState == GAME_HOME) {
-
-										home_option = (home_option + 1) % HOME_ITEM_COUNT;   
-
-    
-										if (home_option >= home_view_start + 3) {
-										home_view_start++;
-										}
-										if (home_view_start + 3 > HOME_ITEM_COUNT) {
-										home_view_start = HOME_ITEM_COUNT - 3;
-										}
-									if (home_option < home_view_start) {
-										home_view_start = home_option;
-										}
-									EventRB_Post(&gEventRB, EVT_DRAW_FRAME);
-}
-
-										else if (flag_gameState == GAME_MENU) {
-											menu_option = (menu_option + 1) % 3;
-											EventRB_Post(&gEventRB, EVT_DRAW_FRAME);
-										}
-										else if (flag_gameState == GAME_WAIT_START) {
-   
-										int unlocked = 0;
-										if (selected_bird == 0) unlocked = 1;
-										else if (selected_bird == 1 && cups >= cup_unlock_thresholds[1]) unlocked = 1;
-										else if (selected_bird == 2 && cups >= cup_unlock_thresholds[2]) unlocked = 1;
-										if (!unlocked) selected_bird = 0;
-
-										flag_gameState = GAME_PLAYING;
-										EventRB_Post(&gEventRB, EVT_DRAW_FRAME);
-}
-
-										else if (flag_gameState == GAME_PLAYING) {
-											Bird_Jump();
-											EventRB_Post(&gEventRB, EVT_DRAW_FRAME);
-											EventRB_Post(&gEventRB, EVT_SPEAKER_BEEP);
-										}
-										else if (flag_gameState == GAME_OVER) {
-											flag_gameState = GAME_HOME;
-											EventRB_Post(&gEventRB, EVT_DRAW_FRAME);
-										}
-										else if (flag_gameState == GAME_HISTORY) {
-											flag_gameState = GAME_HOME;
-											EventRB_Post(&gEventRB, EVT_DRAW_FRAME);
-										}
-										
-																			
-							break;
-
-						case EVT_TIMER_TICK:
-                    if (flag_gameState == GAME_PLAYING) {
-                        Game_Update();
-                        EventRB_Post(&gEventRB, EVT_DRAW_FRAME);
-                    }
-             break;
-						
-						case EVT_SPEAKER_BEEP:
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
-    HAL_Delay(20);
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
-    break;
-
-						case EVT_DRAW_FRAME:
-                    Game_Draw();
+while(EventRB_Get(&gEventRB, &e))
+{
+    switch(e.type)
+    {
+        case EVT_BTN_PRESS:
+            switch(last_button_pin) 
+            {
+                case GPIO_PIN_3:
+                    HandleButtonPress();
                     break;
 
-                default: break;
+                case GPIO_PIN_13:
+                   
+								HandleJumpOrNextOption();
+                    break;
+
+                case GPIO_PIN_4:
+                    Signal_StopAll();
+                    flag_gameState = GAME_HOME;
+                    Game_Init();
+                    EventRB_Post(&gEventRB, EVT_DRAW_FRAME);
+                    break;
+
+                default:
+                    break;
             }
-        }
+            break;
+
+        case EVT_TIMER_TICK:
+            if(flag_gameState == GAME_PLAYING)
+            {
+                Game_Update();
+                EventRB_Post(&gEventRB, EVT_DRAW_FRAME);
+            }
+            break;
+
+        case EVT_DRAW_FRAME:
+            Game_Draw();
+            break;
+
+        default:
+            break;
+    }
+}
+
     }
 }
 

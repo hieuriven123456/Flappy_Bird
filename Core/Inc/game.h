@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>  
+#include "signal_handle.h"
 
 typedef struct {
     float x, y;
@@ -11,7 +12,7 @@ typedef struct {
 } Bird;
 
 typedef struct {
-    int8_t x;
+    int16_t x;
     int8_t gap_y;
     int8_t gap_height;
     uint8_t passed;
@@ -31,6 +32,6 @@ void Game_Init(void);
 void Game_Update(void);
 void Game_Draw(void);
 void Bird_Jump(void);
-void Pipes_ResetNormal();
+void Pipes_ResetNormal(void);
 
 #endif

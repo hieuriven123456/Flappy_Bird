@@ -412,6 +412,26 @@
               <FileType>5</FileType>
               <FilePath>..\Core\Inc\button_handle.h</FilePath>
             </File>
+            <File>
+              <FileName>buzzer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\buzzer.h</FilePath>
+            </File>
+            <File>
+              <FileName>led_handle.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\led_handle.h</FilePath>
+            </File>
+            <File>
+              <FileName>signal_handle.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\signal_handle.h</FilePath>
+            </File>
+            <File>
+              <FileName>main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\main.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -466,6 +486,21 @@
               <FileName>button_handle.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\button_handle.c</FilePath>
+            </File>
+            <File>
+              <FileName>buzzer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\buzzer.c</FilePath>
+            </File>
+            <File>
+              <FileName>led_handle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\led_handle.c</FilePath>
+            </File>
+            <File>
+              <FileName>signal_handle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\signal_handle.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -10,9 +10,7 @@ typedef enum {
     EVT_BTN_PRESS,
     EVT_TIMER_TICK,
     EVT_GAME_UPDATE,
-    EVT_GAME_OVER,
-		EVT_SPEAKER_BEEP, 
-    EVT_DRAW_FRAME
+    EVT_DRAW_FRAME,
 } EventType;
 
 typedef struct {
@@ -24,6 +22,8 @@ typedef struct {
     EventMsg pool[EVENT_POOL_SIZE];
     uint8_t head;
     uint8_t tail;
+    uint8_t count;   // s? event hi?n có
+    uint8_t size;    // kích thu?c pool (thu?ng = EVENT_POOL_SIZE)
 } EventRingBuffer;
 
 void EventRB_Init(EventRingBuffer *rb);

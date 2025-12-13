@@ -14,6 +14,7 @@ extern Difficulty game_difficulty;
 extern GravityLevel selected_gravity;
 
 
-void Button_Handle(uint16_t GPIO_Pin);  // x? lý callback ng?n
-
+void Button_Handle(uint16_t GPIO_Pin);  
+void HandleButtonPress(void);
+void HandleJumpOrNextOption(void);
 #endif

@@ -41,7 +41,7 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-static uint8_t msg_head = 0, msg_tail = 0;
+
 extern const unsigned char epd_bitmap_flappybird1 [];
 extern const unsigned char epd_bitmap_flappybird2 [];
 extern const unsigned char epd_bitmap_flappybird3 [];

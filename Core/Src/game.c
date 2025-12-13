@@ -2,7 +2,6 @@
 #include "config.h"
 #include "draw_game.h"
 
-
 const char* HOME_ITEMS[] = {
     "Start",
     "Menu",
@@ -375,11 +374,12 @@ void Game_Update(void) {
         SaveScoreToHistory();
         UpdateRanking(score);
         flag_gameState = GAME_OVER;
+				Signal_SetMode(SIGNAL_MODE_GAME_OVER);
         return;
 			}
 		//
 
-		return; // ?? Khong chay logic pipe nua
+		return; 
 		}
     int pipe_speed = (game_difficulty == DIFFICULTY_HARD) ? 4 :(game_difficulty == DIFFICULTY_MEDIUM) ? 3 : 2;
 
@@ -433,6 +433,7 @@ void Game_Update(void) {
                 SaveScoreToHistory();
                 UpdateRanking(score);
                 flag_gameState = GAME_OVER;
+								Signal_SetMode(SIGNAL_MODE_GAME_OVER);
                 return;
             }
         }
@@ -443,6 +444,7 @@ void Game_Update(void) {
         SaveScoreToHistory();
         UpdateRanking(score);
         flag_gameState = GAME_OVER;
+				Signal_SetMode(SIGNAL_MODE_GAME_OVER);
         return;
     }
 }

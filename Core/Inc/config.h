@@ -6,7 +6,6 @@
 #define SCREEN_WIDTH   128
 #define SCREEN_HEIGHT   64
 #define MAX_PIPES 3
-#define MAX_POOL 8
 #define HOME_ITEM_COUNT 6
 
 
@@ -37,8 +36,7 @@ typedef enum {
 } Difficulty;
 typedef enum {
     MENU_DIFFICULTY = 0,
-    MENU_GRAVITY,
-    MENU_MAX
+    MENU_GRAVITY
 } MenuItem;
 
 
