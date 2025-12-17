@@ -169,7 +169,7 @@ void Game_Menu_Main_Draw()
     {
         int y = 20 + i*16; // v? trí t?ng m?c
 
-        // Highlight n?u dang ch?n
+        // Highlight neu dang chon
         if (menu_index == i)
         {
             ssd1306_DrawFilledRectangle(0, y-2, 127, y+12, White); // n?n tr?ng
@@ -183,7 +183,7 @@ void Game_Menu_Main_Draw()
             ssd1306_WriteString((char*)menu_items[i], Font_7x10, White);
         }
 
-        // Hi?n th? giá tr? hi?n t?i bên ph?i
+        // Hien thi giá tri hien tai ben phai
         char buf[16];
         if (i == 0) // Difficulty
         {
@@ -198,7 +198,7 @@ void Game_Menu_Main_Draw()
             else snprintf(buf, sizeof(buf), "JUPITER");
         }
 
-        int right_x0 = 76;     // bat dau cot ph?i
+        int right_x0 = 76;     // bat dau cot phai
 				int right_x1 = 127;    // ket thúc cot phai
 				int right_width = right_x1 - right_x0;
 

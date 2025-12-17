@@ -45,7 +45,7 @@ int nopipe_gap_y = 0;
 int nopipe_gap_height = 30;   // Khe rong
 
 // 5 diem thi dc 1 cup
-int next_reward_score = 5; 
+uint8_t next_reward_score = 5; 
 
 // do kho game
 const int cup_unlock_thresholds[] = {0, 5, 10};

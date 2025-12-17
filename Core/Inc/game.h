@@ -24,9 +24,7 @@ typedef struct {
 
 
 extern Bird bird;
-extern int next_reward_score;
-
-
+extern uint8_t next_reward_score;
 
 void Game_Init(void);
 void Game_Update(void);

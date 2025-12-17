@@ -28,6 +28,9 @@
 #include "ring_buffer.h"
 #include "button_handle.h"
 #include "signal_handle.h"
+#include "AO_game.h"
+#include "AO_render.h"
+#include "AO_signal.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -57,7 +60,8 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+extern GameState flag_gameState;
+EventRingBuffer gEventRB;
 
 /* USER CODE END PFP */
 
@@ -65,17 +69,6 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
-
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
-
-
-
-extern GameState flag_gameState;
-EventRingBuffer gEventRB;
-extern uint16_t last_button_pin;
 
 
 
@@ -98,63 +91,22 @@ int main(void)
     EventRB_Post(&gEventRB, EVT_DRAW_FRAME);
     uint32_t lastTick = HAL_GetTick();
 
-    while (1) {
-				
-				 Signal_Update();
-        if (HAL_GetTick() - lastTick >= 30) {
-            EventRB_Post(&gEventRB, EVT_TIMER_TICK);
-            lastTick = HAL_GetTick();
-        }
-
-        EventMsg e;
-while(EventRB_Get(&gEventRB, &e))
-{
-    switch(e.type)
+    while (1)
+{		
+		Signal_Update();
+    if (HAL_GetTick() - lastTick >= 30) {
+        EventRB_Post(&gEventRB, EVT_TIMER_TICK);
+        lastTick = HAL_GetTick();
+    }
+    EventMsg e;
+    while(EventRB_Get(&gEventRB, &e))
     {
-        case EVT_BTN_PRESS:
-            switch(last_button_pin) 
-            {
-                case GPIO_PIN_3:
-                    HandleButtonPress();
-                    break;
-
-                case GPIO_PIN_13:
-                   
-								HandleJumpOrNextOption();
-                    break;
-
-                case GPIO_PIN_4:
-                    Signal_StopAll();
-                    flag_gameState = GAME_HOME;
-                    Game_Init();
-                    EventRB_Post(&gEventRB, EVT_DRAW_FRAME);
-                    break;
-
-                default:
-                    break;
-            }
-            break;
-
-        case EVT_TIMER_TICK:
-            if(flag_gameState == GAME_PLAYING)
-            {
-                Game_Update();
-                EventRB_Post(&gEventRB, EVT_DRAW_FRAME);
-            }
-            break;
-
-        case EVT_DRAW_FRAME:
-            Game_Draw();
-            break;
-
-        default:
-            break;
+        GameAO_Handle(&e);
+        RenderAO_Handle(&e);
+        SignalAO_Handle(&e);
     }
+	}
 }
-
-    }
-}
-
 
 
 /**

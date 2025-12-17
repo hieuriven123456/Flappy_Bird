@@ -43,10 +43,10 @@ void Signal_Update(void)
     }
 }
 void Signal_StopAll(void) {
-    // T?t LED
+    // Tat LED
     HAL_GPIO_WritePin(LED_PORT, LED_PIN, GPIO_PIN_RESET);
 
-    // T?t buzzer
+    // Tat buzzer
     HAL_GPIO_WritePin(BUZZ_PORT, BUZZ_PIN , GPIO_PIN_RESET);
 
      currentMode = SIGNAL_MODE_NONE;

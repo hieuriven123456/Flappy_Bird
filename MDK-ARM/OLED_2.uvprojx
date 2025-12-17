@@ -432,6 +432,21 @@
               <FileType>5</FileType>
               <FilePath>..\Core\Inc\main.h</FilePath>
             </File>
+            <File>
+              <FileName>AO_game.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\AO_game.h</FilePath>
+            </File>
+            <File>
+              <FileName>AO_signal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\AO_signal.h</FilePath>
+            </File>
+            <File>
+              <FileName>AO_render.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\AO_render.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -501,6 +516,21 @@
               <FileName>signal_handle.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\signal_handle.c</FilePath>
+            </File>
+            <File>
+              <FileName>AO_game.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\AO_game.c</FilePath>
+            </File>
+            <File>
+              <FileName>AO_signal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\AO_signal.c</FilePath>
+            </File>
+            <File>
+              <FileName>AO_render.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\AO_render.c</FilePath>
             </File>
           </Files>
         </Group>

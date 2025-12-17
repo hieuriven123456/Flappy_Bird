@@ -13,9 +13,7 @@ void LED_Off(void);
  */
 void LED_Blink_Start(uint32_t duration_ms);
 
-/**
- * @brief Cap nhat LED, goi trong main loop
- */
+
 void LED_Blink_Update(void);
 
 #endif
