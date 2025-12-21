@@ -46,8 +46,8 @@ Dự án triển khai trò chơi **Flappy Bird** trên vi điều khiển **STM3
           v                            v
 +-------------------+        +-------------------+
 |   Game Logic      |        |   OLED SSD1306    |
-| (Physics, Score, |         |      Display      |
-|  Collision)      |         +-------------------+
+| (Physics, Score,  |        |      Display      |
+|  Collision)       |        +-------------------+
 +-------------------+
 ```
 
@@ -65,7 +65,9 @@ Sơ đồ trên thể hiện luồng xử lý chính của hệ thống, trong �
 * `GAME_HISTORY`: Lịch sử điểm
 * `GAME_RANK`: Bảng xếp hạng
 * `GAME_BIRD_SELECT`: Chọn nhân vật
-
+* `GAME_MENU_DIFFICULTY_SELECT,`: Chọn độ khó cho game
+* `GAME_PLATFORM`: Màn hình nền 
+  
 ---
 
 ## Các chức năng chính
@@ -120,7 +122,7 @@ Drivers/         // Thư viện HAL
 
 ## Build & Flash
 
-* KEILC
+* Keil C
 * Compiler: ARM-GCC
 
 ---
