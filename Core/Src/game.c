@@ -74,14 +74,12 @@ void Game_Draw(void)
         ssd1306_WriteString("TO START", Font_7x10, White);
     }
 		else if (flag_gameState == GAME_PLATFORM) {
-    int bmp_width = 95;
-    int bmp_height = 64;
-
-    int x = (SSD1306_WIDTH - bmp_width) / 2;  
-    int y = (SSD1306_HEIGHT - bmp_height) / 2; 
-
-   ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird, 95, 64, x, y, 1);
-}
+				int bmp_width = 95;
+				int bmp_height = 64;
+				int x = (SSD1306_WIDTH - bmp_width) / 2;  
+				int y = (SSD1306_HEIGHT - bmp_height) / 2; 
+				ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird, 95, 64, x, y, 1);
+		}
 
     else if (flag_gameState == GAME_PLAYING) {
 				ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird1, 16, 10, bird.x, bird.y, 1);
@@ -93,40 +91,37 @@ void Game_Draw(void)
 				ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird3, 13, 10, bird.x, bird.y, 0);
 			}
 			
-if (nopipe_mode) {
+		if (nopipe_mode) {
 
-  
-    if (selected_bird == 0)
-        ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird1, 16, 10, bird.x, bird.y, 1);
-    else if (selected_bird == 1)
-        ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird2, 12, 12, bird.x, bird.y, 0);
-    else
-        ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird3, 13, 10, bird.x, bird.y, 0);
+				if (selected_bird == 0)
+						ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird1, 16, 10, bird.x, bird.y, 1);
+				else if (selected_bird == 1)
+						ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird2, 12, 12, bird.x, bird.y, 0);
+				else
+						ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird3, 13, 10, bird.x, bird.y, 0);
 
-    drawZigZagTop(nopipe_gap_y);
-		drawZigZagBottom(nopipe_gap_y + nopipe_gap_height);
+						drawZigZagTop(nopipe_gap_y);
+						drawZigZagBottom(nopipe_gap_y + nopipe_gap_height);
 
 
-  
-    char buf[12];
+		char buf[12];
     sprintf(buf, "%d", score);
     int text_width = strlen(buf) * 7;
     int cx = (SCREEN_WIDTH - text_width) / 2;
     ssd1306_SetCursor(cx, 0);
     ssd1306_WriteString(buf, Font_7x10, White);
 
-   
-    ssd1306_UpdateScreen();
+		ssd1306_UpdateScreen();
     return;
-}
+		}
 
 
-				for (int i = 0; i < num_pipes; i++) {
-						int16_t px = pipes[i].x;
-							if (px > -10 && px < SCREEN_WIDTH + 10) { 
-								drawPipe(px, pipes[i].gap_y, pipes[i].gap_height);
-							}
-				}
+		for (int i = 0; i < num_pipes; i++) {
+				int16_t px = pipes[i].x;
+				if (px > -10 && px < SCREEN_WIDTH + 10) { 
+						drawPipe(px, pipes[i].gap_y, pipes[i].gap_height);
+					}
+		}
 
 				int cup_x = 2;
 				int cup_y = 0;
@@ -356,10 +351,10 @@ void UpdateRanking(int newScore) {
 void Game_Update(void) {
     if (gameOver) return;
 		if (nopipe_mode) {
-    // kiem tra het 5 giây
+    // kiem tra het 3 giây
 				if (HAL_GetTick() - nopipe_start_time >= 3000) {
         nopipe_mode = 0;
-        Pipes_ResetNormal(); // ch? reset ?ng
+        Pipes_ResetNormal(); 
         return;
 				}
 

@@ -132,6 +132,10 @@ Drivers/         // Thư viện HAL
 * Hiếu Nguyễn
 
 ---
+## Video demo 
+
+Nguồn: https://drive.google.com/file/d/1MZCyKduyS832CezS1TOdv1B_aDJDYoFX/view?usp=sharing
+
 ## Bản quyền và ghi nhận
 
 Dự án này được phát triển cho mục đích **học tập và nghiên cứu**.
@@ -144,5 +148,5 @@ Một số kit, thư viện và tài liệu được sử dụng trong dự án 
   License: MIT
 
 - Kit thực hành: AK Embedded Base Kit 
-
+  Nguồn: https://epcb.vn/products/ak-embedded-base-kit-lap-trinh-nhung-vi-dieu-khien-mcu
 
