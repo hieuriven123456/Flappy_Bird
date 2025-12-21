@@ -149,6 +149,6 @@ Một số kit, thư viện và tài liệu được sử dụng trong dự án 
   Tác giả: Alexey Dynda  
   License: MIT
 
-- Kit thực hành: AK Embedded Base Kit 
+- Kit thực hành: AK Embedded Base Kit  
   Nguồn: https://epcb.vn/products/ak-embedded-base-kit-lap-trinh-nhung-vi-dieu-khien-mcu
 
