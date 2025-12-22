@@ -7,7 +7,7 @@
 #include "ssd1306_fonts.h"
 #include "soft_i2c.h"
 #include "config.h"
-
+#include "game.h"
 extern Difficulty game_difficulty;
 extern GravityLevel selected_gravity;
 extern int menu_index; 
@@ -23,9 +23,23 @@ void Game_DrawOptionMenu(const char* title, const char* options[], int num_optio
 void drawZigZagBottom(int y_start);
 void drawZigZagTop(int y_end);
 void Game_Menu_Main_Draw(void);
+void Game_DrawGameOver(void);
+void Game_DrawWaitStart(void);
+void Game_DrawPlatform(void);
+void Game_Draw_Bird(void);
+void Game_Menu_Diff(void);
+void Game_Menu_Gravity(void);
+void Draw_Rank(void);
+void Draw_Game_Home(void);
+void Draw_Bird_selected(void);
+void Draw_History(void);
+void Draw_Nopipe_game(void);
+void Draw_Game_Normal(void);
 extern const unsigned char epd_bitmap_flappybird1 [];
 extern const unsigned char epd_bitmap_flappybird2 [];
 extern const unsigned char epd_bitmap_flappybird3 [];
 extern const unsigned char epd_bitmap_flappybird [];
+extern int8_t high_scores[4];
+extern uint8_t history_count;
 
 #endif

@@ -483,14 +483,14 @@
               <FilePath>../Core/Src/stm32l1xx_hal_timebase_tim.c</FilePath>
             </File>
             <File>
-              <FileName>draw_game.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\draw_game.c</FilePath>
-            </File>
-            <File>
               <FileName>game.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\game.c</FilePath>
+            </File>
+            <File>
+              <FileName>draw_game.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\draw_game.c</FilePath>
             </File>
             <File>
               <FileName>ring_buffer.c</FileName>

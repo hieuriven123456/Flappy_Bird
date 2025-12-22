@@ -1,6 +1,6 @@
 #include "draw_game.h"
 #include "config.h"
-
+#include "game.h"
 
 void ssd1306_DrawFilledRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, SSD1306_COLOR color) {
     for (uint8_t x = x1; x <= x2; x++) {
@@ -217,7 +217,218 @@ void Game_Menu_Main_Draw()
     ssd1306_UpdateScreen();
 }
 
+void Game_DrawGameOver(void)
+{
+    ssd1306_SetCursor(20, 25);
+    ssd1306_WriteString("GAME OVER", Font_11x18, White);
 
+    ssd1306_SetCursor(25, 50);
+    ssd1306_WriteString("PRESS BTN", Font_7x10, White);
+}
+void Game_DrawWaitStart(void)
+{
+    ssd1306_SetCursor(10, 25);
+    ssd1306_WriteString("PRESS BTN", Font_11x18, White);
+
+    ssd1306_SetCursor(25, 50);
+    ssd1306_WriteString("TO START", Font_7x10, White);
+}
+void Game_DrawPlatform(void)
+{
+				int bmp_width = 95;
+				int bmp_height = 64;
+				int x = (SSD1306_WIDTH - bmp_width) / 2;  
+				int y = (SSD1306_HEIGHT - bmp_height) / 2; 
+				ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird, 95, 64, x, y, 1);
+}
+void Game_Draw_Bird(void){
+	ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird1, 16, 10, bird.x, bird.y, 1);
+				if (selected_bird == 0) {
+					ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird1, 16, 10, bird.x, bird.y, 1);
+				} else if (selected_bird == 1) {
+				ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird2, 12, 12, bird.x, bird.y, 0);
+				} else if (selected_bird == 2) {
+				ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird3, 13, 10, bird.x, bird.y, 0);
+			}
+}
+void Game_Menu_Diff(void)
+{
+	const char* diff_options[3] = {"EASY", "MEDIUM", "HARD"};
+    Game_DrawOptionMenu("SELECT DIFFICULTY", diff_options, 3, selected_option);
+}
+void Game_Menu_Gravity(void)
+{
+		 const char* grav_options[3] = {"MARS", "EARTH", "JUPITER"};
+    Game_DrawOptionMenu("SELECT GRAVITY", grav_options, 3, selected_option);
+}
+void Draw_Rank(void)
+	{
+	const char *title = "RANKING";
+    int title_len = strlen(title);
+    int title_x = (128 - title_len * 7) / 2;  // Font_7x10: moi ky tu 7px
+    ssd1306_SetCursor(title_x, 0);
+    ssd1306_WriteString((char*)title, Font_7x10, White);
+
+    
+    for (int i = 0; i < 4; i++) {
+        char buf[20];
+        sprintf(buf, "Rank %d. %d pts", i + 1, high_scores[i]);
+        int buf_len = strlen(buf);
+        int buf_x = (128 - buf_len * 6) / 2;   // Font_6x8: moi ky tu 6px
+        ssd1306_SetCursor(buf_x, 20 + i * 12);
+        ssd1306_WriteString(buf, Font_6x8, White);
+    }
+}
+
+void Draw_Game_Home(void)
+{
+	ssd1306_SetCursor(25, 2);
+    ssd1306_WriteString("FLAPPY BIRD", Font_7x10, White);
+
+    for (int i = 0; i < 5; i++) {  
+        int idx = home_view_start + i;
+        if (idx >= HOME_ITEM_COUNT) break;
+
+        int y = 18 + i * 12;  
+				int text_width = strlen(HOME_ITEMS[idx]) * 6;  
+        int center_x = (128 - text_width) / 2;
+        if (idx == home_option) {
+            drawArrow(18, y);
+            ssd1306_DrawFilledRectangle(center_x - 5, y - 2, center_x + text_width + 5, y + 8, White);
+
+            ssd1306_SetCursor(center_x, y);
+            ssd1306_WriteString((char*)HOME_ITEMS[idx], Font_6x8, Black);
+
+        } else {
+            ssd1306_SetCursor(center_x, y);
+            ssd1306_WriteString((char*)HOME_ITEMS[idx], Font_6x8, White);
+        }
+    }
+}
+
+void Draw_Bird_selected(void)
+{
+	ssd1306_SetCursor(20, 12);
+    ssd1306_WriteString("SELECT BIRD", Font_7x10, White);
+
+  
+    char cup_text[12];
+    sprintf(cup_text, "Cups: %d", cups);
+    ssd1306_SetCursor(2, 0);
+    ssd1306_WriteString(cup_text, Font_6x8, White);
+
+    for (int i = 0; i < 3; i++) {
+        int x = 20 + i * 35;
+        int y = 30;
+       
+        int unlocked = 0;
+        if (i == 0) unlocked = 1;
+        else if (i == 1 && cups >= cup_unlock_thresholds[1]) unlocked = 1;
+        else if (i == 2 && cups >= cup_unlock_thresholds[2]) unlocked = 1;
+
+        if (i == selected_bird) ssd1306_DrawRectangle(x-2, y-2, x+18, y+18, White);
+        else ssd1306_DrawFilledRectangle(x-2, y-2, x+18, y+18, Black);
+			
+        if (i == 0)
+        ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird1, 16, 10, x, y, 1);
+				else if (i == 1)
+        ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird2, 12, 12, x+2, y-1, 0);
+				else if (i == 2)
+        ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird3, 13, 10, x+1, y, 0);
+
+    
+        if (!unlocked) {
+            ssd1306_SetCursor(x+3, y+12);
+            char buf[8];
+            sprintf(buf, "L%d", cup_unlock_thresholds[i]);
+            ssd1306_WriteString(buf, Font_6x8, White);
+        }
+    }
+
+    ssd1306_SetCursor(10, 55);
+    ssd1306_WriteString("Press BTN to select", Font_6x8, White);
+}
+void Draw_History(void)
+{
+			ssd1306_SetCursor(40, 5);
+						ssd1306_WriteString("HISTORY", Font_7x10, White);
+					if (history_count == 0) {
+						ssd1306_SetCursor(25, 30);
+						ssd1306_WriteString("No records yet", Font_6x8, White);
+					} 
+					else {
+						for (int i = 0; i < history_count; i++) {
+            const char *diffName;
+						
+            switch (history[i].difficulty) {
+                case DIFFICULTY_EASY:   diffName = "Easy"; break;
+                case DIFFICULTY_MEDIUM: diffName = "Medium";  break;
+                case DIFFICULTY_HARD:   diffName = "Hard"; break;
+                default:                diffName = "?";    break;
+            }
+						
+            char line[20];
+            sprintf(line, "%d. %d (%s) ", i + 1, history[i].score, diffName);
+
+  
+            int y = 20 + i * 10; 
+            ssd1306_SetCursor(32, y);
+            ssd1306_WriteString(line, Font_6x8, White);
+        }
+    }
+}
+
+void Draw_Nopipe_game(void)
+{
+	if (selected_bird == 0)
+						ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird1, 16, 10, bird.x, bird.y, 1);
+				else if (selected_bird == 1)
+						ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird2, 12, 12, bird.x, bird.y, 0);
+				else
+						ssd1306_DrawBitmapTransparent(epd_bitmap_flappybird3, 13, 10, bird.x, bird.y, 0);
+
+						drawZigZagTop(nopipe_gap_y);
+						drawZigZagBottom(nopipe_gap_y + nopipe_gap_height);
+				char buf[12];
+    sprintf(buf, "%d", score);
+    int text_width = strlen(buf) * 7;
+    int cx = (SCREEN_WIDTH - text_width) / 2;
+    ssd1306_SetCursor(cx, 0);
+    ssd1306_WriteString(buf, Font_7x10, White);
+}
+
+void Draw_Game_Normal(void)
+{
+	
+for (int i = 0; i < num_pipes; i++) {
+				int16_t px = pipes[i].x;
+				if (px > -10 && px < SCREEN_WIDTH + 10) { 
+						drawPipe(px, pipes[i].gap_y, pipes[i].gap_height);
+					}
+		}
+
+				int cup_x = 2;
+				int cup_y = 0;
+				drawCup(cup_x, cup_y);
+
+				char cup_text[8];
+				sprintf(cup_text, "x%d", cups);
+				ssd1306_SetCursor(cup_x + 12, cup_y); 
+				ssd1306_WriteString(cup_text, Font_7x10, White);
+ 
+        char buf[10];
+				sprintf(buf, "%d", score);
+
+				int text_width = strlen(buf) * 7;  
+				int center_x = (SCREEN_WIDTH - text_width) / 2;
+				int y_top = 0;
+				ssd1306_SetCursor(center_x, y_top);
+				ssd1306_WriteString(buf, Font_7x10, White);   
+				ssd1306_SetCursor(92, 0);
+        if (game_difficulty == DIFFICULTY_EASY) ssd1306_WriteString("E", Font_7x10, White);
+        else if (game_difficulty == DIFFICULTY_MEDIUM) ssd1306_WriteString("M", Font_7x10, White);
+        else ssd1306_WriteString("H", Font_7x10, White);
+}
 const unsigned char epd_bitmap_flappybird1 []  = {
 	0xe7, 0xff, 0xf9, 0xff, 0xe7, 0x7f, 0xef, 0xff, 0xff, 0xff, 0xff, 0x81, 0xfe, 0x00, 0xbe, 0x01, 
 	0xdf, 0x03, 0xf9, 0xff
