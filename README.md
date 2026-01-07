@@ -136,7 +136,7 @@ Drivers/         // Thư viện HAL
 ---
 ## Video demo 
 
-Nguồn: https://github.com/user-attachments/assets/265d2fde-e3f5-427c-84b7-87526665d7c8
+https://github.com/user-attachments/assets/265d2fde-e3f5-427c-84b7-87526665d7c8
 
 ## Bản quyền và ghi nhận
 
