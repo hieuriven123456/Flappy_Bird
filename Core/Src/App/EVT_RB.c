@@ -1,4 +1,4 @@
-#include "ring_buffer.h"
+#include "EVT_RB.h"
 
 void EventRB_Init(EventRingBuffer *rb) {
     rb->head = 0;

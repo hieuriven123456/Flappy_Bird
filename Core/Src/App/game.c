@@ -66,56 +66,58 @@ void Game_Draw(void)
 {
     ssd1306_Fill(Black);
 
-    if (flag_gameState == GAME_WAIT_START) {
-         Game_DrawWaitStart();
+    switch (flag_gameState) {
+        case GAME_WAIT_START:
+            Game_DrawWaitStart();
+            break;
+
+        case GAME_PLATFORM:
+            Game_DrawPlatform();
+            break;
+
+        case GAME_PLAYING:
+            Game_Draw_Bird();
+            if (nopipe_mode) {
+                Draw_Nopipe_game();
+                ssd1306_UpdateScreen();
+                return;
+            }
+            Draw_Game_Normal();
+            break;
+
+        case GAME_OVER:
+            Game_DrawGameOver();
+            break;
+
+        case GAME_HOME:
+            Draw_Game_Home();
+            break;
+
+        case GAME_MENU:
+            Game_Menu_Main_Draw();
+            break;
+
+        case GAME_MENU_DIFFICULTY_SELECT:
+            Game_Menu_Diff();
+            break;
+
+        case GAME_MENU_GRAVITY_SELECT:
+            Game_Menu_Gravity();
+            break;
+
+        case GAME_HISTORY:
+            Draw_History();
+            break;
+
+        case GAME_BIRD_SELECT:
+            Draw_Bird_selected();
+            break;
+
+        case GAME_RANK:
+            Draw_Rank();
+            break;
     }
-		else if (flag_gameState == GAME_PLATFORM) {
-				Game_DrawPlatform();
-		}
-
-    else if (flag_gameState == GAME_PLAYING) {
-				Game_Draw_Bird();
-			
-		if (nopipe_mode) {
-				Draw_Nopipe_game();
-
-		ssd1306_UpdateScreen();
-    return;
-		}
-		Draw_Game_Normal();
-    }
-
-    else if (flag_gameState == GAME_OVER) {
-        Game_DrawGameOver();
-    }
-		else if (flag_gameState == GAME_HOME) {
-				Draw_Game_Home();
-	}	
-
-		else if (flag_gameState == GAME_MENU) {
-			Game_Menu_Main_Draw();
-}
-		else if(flag_gameState == GAME_MENU_DIFFICULTY_SELECT)
-{
-			Game_Menu_Diff();
-}
-		else if(flag_gameState == GAME_MENU_GRAVITY_SELECT)
-{
-   Game_Menu_Gravity();
-}
-
-	else if (flag_gameState == GAME_HISTORY) {
-				Draw_History();
-}
-	else if (flag_gameState == GAME_BIRD_SELECT) {
-    Draw_Bird_selected();
-	}
-	else if (flag_gameState == GAME_RANK) {
-		Draw_Rank();
-}
-
     ssd1306_UpdateScreen();
-		
 }
 
 
@@ -183,12 +185,10 @@ void Game_Update(void) {
         Pipes_ResetNormal(); 
         return;
 				}
-
     // cap nhat bird
 				float gravity_force = (selected_gravity == GRAVITY_JUPITER) ? 3.0f :(selected_gravity == GRAVITY_MARS)  ? 1.5f : 2.0f;
 				bird.vy += gravity_force;
 				bird.y += bird.vy;
-
     // kiem tra va cham voi khe
 				if (bird.y <= nopipe_gap_y || bird.y >= nopipe_gap_y + nopipe_gap_height) {
         gameOver = 1;
@@ -199,11 +199,9 @@ void Game_Update(void) {
         return;
 			}
 		//
-
 		return; 
 		}
     int pipe_speed = (game_difficulty == DIFFICULTY_HARD) ? 4 :(game_difficulty == DIFFICULTY_MEDIUM) ? 3 : 2;
-
     float gravity_force = (selected_gravity == GRAVITY_JUPITER) ? 3.0f :(selected_gravity == GRAVITY_MARS)  ? 1.5f : 2.0f;
 		int bird_width = (selected_bird == 0) ? 16 :(selected_bird == 1) ? 12 : 13;
 		int bird_height = (selected_bird == 0) ? 10 :(selected_bird == 1) ? 12 : 10;
@@ -211,7 +209,6 @@ void Game_Update(void) {
     bird.y += bird.vy;
     for (int i = 0; i < num_pipes; i++) {
         pipes[i].x -= pipe_speed;
-
     // kiem tra vuot ong de tang diem
     if (!pipes[i].passed && pipes[i].x + 12 < bird.x && pipes[i].x > -20) {
          pipes[i].passed = 1;
@@ -224,8 +221,8 @@ void Game_Update(void) {
         nopipe_mode = 1;
         nopipe_start_time = HAL_GetTick();
         nopipe_gap_y = 10 + rand() % (SCREEN_HEIGHT - nopipe_gap_height - 10);
-    }
-        }
+			}
+     }
     // reset ong khi di het man hinh
 		if (pipes[i].x < -20) {
 		int16_t max_x = pipes[0].x;
@@ -238,11 +235,8 @@ void Game_Update(void) {
 						(game_difficulty == DIFFICULTY_EASY) ? 28 : (game_difficulty == DIFFICULTY_MEDIUM) ? 26 :24; // HARD
 				int random_range = (game_difficulty == DIFFICULTY_EASY)? 8 :(game_difficulty == DIFFICULTY_MEDIUM) ? 7 : 6;
 				pipes[i].gap_height = base_gap + rand() % random_range;
-
-	
     // Gioi han khong cho qua be
 				if (pipes[i].gap_height < 12) pipes[i].gap_height = 12;
-
     // Random vi tri Y
 				pipes[i].gap_y = 8 + rand() % (SCREEN_HEIGHT - pipes[i].gap_height - 8);
 				pipes[i].passed = 0;
@@ -269,7 +263,6 @@ void Game_Update(void) {
         return;
     }
 }
-
 void Bird_Jump(void) {
     if (!gameOver) {
         bird.vy = -6;

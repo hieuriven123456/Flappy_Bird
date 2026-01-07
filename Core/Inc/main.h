@@ -42,10 +42,7 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
 
-extern const unsigned char epd_bitmap_flappybird1 [];
-extern const unsigned char epd_bitmap_flappybird2 [];
-extern const unsigned char epd_bitmap_flappybird3 [];
-extern const unsigned char epd_bitmap_flappybird [];
+
 extern const char* HOME_ITEMS[];
 extern uint8_t selected_option;
 

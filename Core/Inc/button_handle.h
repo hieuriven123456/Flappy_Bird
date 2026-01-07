@@ -2,7 +2,7 @@
 #define BUTTON_H
 
 #include "config.h"
-#include "ring_buffer.h"
+#include "EVT_RB.h"
 #include "gpio.h"
 #include "game.h"
 

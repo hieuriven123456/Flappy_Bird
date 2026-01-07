@@ -2,7 +2,7 @@
 #define GAME_AO_H
 
 
-#include "ring_buffer.h"
+#include "EVT_RB.h"
 #include "config.h"
 
 extern EventRingBuffer gEventRB;

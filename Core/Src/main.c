@@ -25,7 +25,7 @@
 #include "draw_game.h"
 #include "config.h"
 #include "game.h"
-#include "ring_buffer.h"
+#include "EVT_RB.h"
 #include "button_handle.h"
 #include "signal_handle.h"
 #include "AO_game.h"
@@ -60,7 +60,7 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-extern GameState flag_gameState;
+
 EventRingBuffer gEventRB;
 
 /* USER CODE END PFP */

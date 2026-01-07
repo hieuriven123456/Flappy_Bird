@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32L151xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32L1xx_HAL_Driver/Inc;../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32L1xx/Include;../Drivers/CMSIS/Include;../Drivers/OLED;..\Drivers\OLED;C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32L1xx_HAL_Driver/Inc;../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32L1xx/Include;../Drivers/CMSIS/Include;../Drivers/OLED;..\Drivers\OLED;C:\Program Files (x86)\GNU-Arm-Embedded-Toolchain\10.2021.10\arm-none-eabi\include;..\Core\Src\AO;..\Core\Src\App;..\Core\Src\Driver;..\Core\Src\GPIO;..\Core\Src\HAL</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -403,11 +403,6 @@
               <FilePath>..\Core\Inc\game.h</FilePath>
             </File>
             <File>
-              <FileName>ring_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Core\Inc\ring_buffer.h</FilePath>
-            </File>
-            <File>
               <FileName>button_handle.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Core\Inc\button_handle.h</FilePath>
@@ -447,6 +442,11 @@
               <FileType>5</FileType>
               <FilePath>..\Core\Inc\AO_render.h</FilePath>
             </File>
+            <File>
+              <FileName>EVT_RB.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\EVT_RB.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -455,82 +455,7 @@
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Core/Src/main.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/stm32l1xx_it.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_hal_msp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/stm32l1xx_hal_msp.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l1xx_hal_timebase_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/stm32l1xx_hal_timebase_tim.c</FilePath>
-            </File>
-            <File>
-              <FileName>game.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\game.c</FilePath>
-            </File>
-            <File>
-              <FileName>draw_game.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\draw_game.c</FilePath>
-            </File>
-            <File>
-              <FileName>ring_buffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\ring_buffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>button_handle.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\button_handle.c</FilePath>
-            </File>
-            <File>
-              <FileName>buzzer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\buzzer.c</FilePath>
-            </File>
-            <File>
-              <FileName>led_handle.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\led_handle.c</FilePath>
-            </File>
-            <File>
-              <FileName>signal_handle.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\signal_handle.c</FilePath>
-            </File>
-            <File>
-              <FileName>AO_game.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\AO_game.c</FilePath>
-            </File>
-            <File>
-              <FileName>AO_signal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\AO_signal.c</FilePath>
-            </File>
-            <File>
-              <FileName>AO_render.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\AO_render.c</FilePath>
+              <FilePath>..\Core\Src\main.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -662,10 +587,110 @@
               <FileType>5</FileType>
               <FilePath>..\Drivers\OLED\ssd1306_tests.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AO</GroupName>
+          <Files>
+            <File>
+              <FileName>AO_game.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\AO\AO_game.c</FilePath>
+            </File>
+            <File>
+              <FileName>AO_render.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\AO\AO_render.c</FilePath>
+            </File>
+            <File>
+              <FileName>AO_signal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\AO\AO_signal.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>HAL</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32l1xx_hal_msp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\HAL\stm32l1xx_hal_msp.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l1xx_hal_timebase_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\HAL\stm32l1xx_hal_timebase_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l1xx_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\HAL\stm32l1xx_it.c</FilePath>
+            </File>
             <File>
               <FileName>system_stm32l1xx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Core/Src/system_stm32l1xx.c</FilePath>
+              <FilePath>..\Core\Src\HAL\system_stm32l1xx.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Driver</GroupName>
+          <Files>
+            <File>
+              <FileName>led_handle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\Driver\led_handle.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\Driver\i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>buzzer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\Driver\buzzer.c</FilePath>
+            </File>
+            <File>
+              <FileName>button_handle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\Driver\button_handle.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>App</GroupName>
+          <Files>
+            <File>
+              <FileName>draw_game.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\App\draw_game.c</FilePath>
+            </File>
+            <File>
+              <FileName>EVT_RB.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\App\EVT_RB.c</FilePath>
+            </File>
+            <File>
+              <FileName>game.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\App\game.c</FilePath>
+            </File>
+            <File>
+              <FileName>signal_handle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\App\signal_handle.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>GPIO</GroupName>
+          <Files>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\GPIO\gpio.c</FilePath>
             </File>
           </Files>
         </Group>
